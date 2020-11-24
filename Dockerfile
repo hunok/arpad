@@ -15,6 +15,7 @@ FROM scratch
 LABEL "maintainer"="hunok/arpad <arpad@akos.me>"
 LABEL "version"="0.1"
 LABEL "description"="github.com/hunok/arpad"
+LABEL org.opencontainers.image.source https://github.com/hunok/arpad
 
 COPY --from=build /src/bin/arpad /bin/arpad
 
