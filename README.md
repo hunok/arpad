@@ -1,6 +1,6 @@
 # arpad
 
-![Build status](https://github.com/hunok/arpad/workflows/merge-to-main/badge.svg)
+![Build status](https://github.com/hunok/arpad/workflows/merge%20to%20main/badge.svg)
 
 Arpad [ˈaːrpaːd] is a container version scanning application. It determines weather the version of the running container is outdated or not, it compares versions to tags in the container registry.
 
