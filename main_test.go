@@ -37,14 +37,19 @@ func TestImages(t *testing.T) {
 		},
 	}, metav1.CreateOptions{})
 
-	testData, err := listImages(fakeClient, "")
+	testDataAllNS, err := listImages(fakeClient, "")
 
 	if err != nil {
 		t.Errorf("Expected nil error, got %s", err)
 	}
 
-	if len(testData) != 1 {
-		t.Errorf("Expected %d, got %d", 1, len(testData))
+	if len(testDataAllNS) != 1 {
+		t.Errorf("Expected %d images, got %d", 1, len(testDataAllNS))
+	}
+
+	testNoNSData, _ := listImages(fakeClient, "test")
+	if len(testNoNSData) != 0 {
+		t.Errorf("Expected %d images, go %d", 0, len(testNoNSData))
 	}
 
 }
