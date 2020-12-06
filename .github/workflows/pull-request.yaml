@@ -32,6 +32,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Create k8s Kind Cluster
+        uses: helm/kind-action@v1.1.0
+
       # Get git short commit hash
       - name: Set outputs
         id: vars
@@ -40,6 +43,12 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run go test
         run: go test -v -cover
+
+      - name: Build artifact for e2e tests
+        run: go build -o ./arpad
+
+      - name: e2e test
+        run: ./arpad -scan-period=1s | grep "k8s.gcr.io" -m 1 # Run the scanner and exit on the first find
 
       # Build docker container and push to registry
       - name: Build and push
