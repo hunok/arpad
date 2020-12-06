@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"path/filepath"
+	"time"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -19,6 +20,9 @@ func main() {
 	} else {
 		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
 	}
+
+	period := flag.Duration("scan-period", 30*time.Second, "(optional) period to run the scan, ex. 5s, 1m, 1h, 1d")
+
 	flag.Parse()
 
 	// use the current context in kubeconfig
@@ -33,12 +37,16 @@ func main() {
 		panic(err.Error())
 	}
 
-	allImages, err := listImages(clientset, "")
-	if err != nil {
-		panic(err.Error())
+	tick := time.Tick(*period)
+	for range tick {
+		allImages, err := listImages(clientset, "")
+		if err != nil {
+			panic(err.Error())
+		}
+
+		fmt.Println(allImages)
 	}
 
-	fmt.Println(allImages)
 }
 
 func listImages(client kubernetes.Interface, namespace string) ([]string, error) {
