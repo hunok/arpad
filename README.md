@@ -19,6 +19,13 @@ To get the latest container:
 docker pull ghcr.io/hunok/arpad:latest
 ```
 
+## Testing
+
+Unit tests can be run via the default go test command
+```bash
+go test -cover -v
+```
+
 ## Similar projects
 
 https://github.com/replicatedhq/outdated - Kubectl plugin to find and report outdated images running in a Kubernetes cluster
